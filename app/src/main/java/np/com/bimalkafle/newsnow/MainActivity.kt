@@ -10,6 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,23 +25,35 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import kotlinx.coroutines.delay
 import np.com.bimalkafle.newsnow.UI.HomePageScreen
 import np.com.bimalkafle.newsnow.UI.NewsArticlePage
 import np.com.bimalkafle.newsnow.UI.NewsArticleScreen
+import np.com.bimalkafle.newsnow.UI.SplashScreen
 import np.com.bimalkafle.newsnow.ViewModel.NewsViewModel
-import np.com.bimalkafle.newsnow.ui.theme.NewsNowTheme
 
-class MainActivity : ComponentActivity() {
+
+class   MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val newsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
         setContent {
-            
+
             val navController = rememberNavController()
-            
-            NewsNowTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+            var showSplash by remember { mutableStateOf(true) }
+
+            LaunchedEffect(Unit) {
+                delay(2000) // 2-second splash delay
+                showSplash = false
+            }
+
+
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                if (showSplash) {
+                    SplashScreen()
+                } else {
                     Column(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -65,4 +82,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }

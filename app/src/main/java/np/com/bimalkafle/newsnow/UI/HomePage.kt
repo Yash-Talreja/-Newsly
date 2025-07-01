@@ -100,7 +100,7 @@ fun CategoriesBar(newsViewModel: NewsViewModel) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search News...") },
+                placeholder = { Text("Search News" , fontSize = 15.sp) },
                 trailingIcon = {
                     IconButton(onClick = {
                         isSearchExpanded = false
@@ -113,8 +113,8 @@ fun CategoriesBar(newsViewModel: NewsViewModel) {
                 },
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .height(50.dp)
-                    .width(220.dp),
+                    .height(60.dp)
+                    .width(250.dp),
                 shape = CircleShape
             )
         } else {
@@ -126,6 +126,7 @@ fun CategoriesBar(newsViewModel: NewsViewModel) {
         categoriesList.forEach { category ->
             Button(
                 onClick = { newsViewModel.fetchNewsTopHeadlines(category) },
+                colors = ButtonDefaults.buttonColors(Color.Blue),
                 shape = CircleShape,
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
